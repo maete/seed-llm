@@ -1,0 +1,24 @@
+fastapi
+uvicorn[standard]
+requests
+pydantic
+pandas
+tqdm
+scikit-learn
+openai
+
+# Fix NumPy version compatibility
+numpy<2.0
+
+# GPU-enabled libraries
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch>=2.0.0
+faiss-gpu
+
+# Updated LangChain packages
+langchain
+langchain-community
+langchain-huggingface  # New package for HuggingFace embeddings
+sentence-transformers
+transformers
+huggingface-hub

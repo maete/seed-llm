@@ -1,0 +1,34 @@
+services:
+  llm_api:
+    build:
+      context: .
+    container_name: llm_api
+    network_mode: host
+    env_file:
+      - .env
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - OLLAMA_GPU_ONLY=true
+      - OLLAMA_NUM_CTX=4096  # Optional, larger context window if you want
+    runtime: nvidia
+    
+volumes:
+  ollama_models:
